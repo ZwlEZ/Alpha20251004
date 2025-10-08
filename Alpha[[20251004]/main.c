@@ -34,12 +34,12 @@ int Z_C_A(int A)
 //Z_B_A加法生成
 void Z_B_A(void)
 {
-	printf("加法运算\n");
+	printf("*>加法运算<*\n*——————————————————*\n需要输入三个数字\n一次输入用空格，隔开\n也可单次输入，输入三次\n前两个数字为算式前后两项的位\n后一个数字是题目的倒数\n*——————————————————*\n退出程序输入：0 0 0\n个位项输入：1\n十位项输入：2\n百位项输入：3\n千位项输入：4\n万位项输入：5\n");
 	int a, b, c, i;//a位数选择，b位数选择，c题数选择，i循环变量
 	if (scanf("%d%d%d", &a, &b, &c) != 3)
 	{
 		printf("\a××××××××××\n输入无效，请输入三个数字。\n××××××××××\n");
-		// 清空输入缓冲区
+		//清空输入缓冲区
 		int ch;
 		while ((ch = getchar()) != '\n' && ch != EOF);
 		Z_B_A();
@@ -48,6 +48,7 @@ void Z_B_A(void)
 	for ( i = 0; i < c; i++)
 	{
 		printf("%d + %d = \n", Z_C_A(a), Z_C_A(b));
+
 	}
 	return;
 }
@@ -58,6 +59,16 @@ void Z_B_B(void)
 }
 //Z_B_C乘法生成
 void Z_B_C(void)
+{
+	return;
+}
+//Z_B_D_A后项为个位数时除法生成
+void Z_B_D_A(void)
+{
+	return;
+}
+//Z_B_D_B后项不为个位数时除法生成
+void Z_B_D_B(void)
 {
 	return;
 }
@@ -75,7 +86,6 @@ void Z_A_A(void)
 	if (scanf("%d", &a) != 1)
 	{
 		printf("\a××××××××××\n请按已有的选项输入，数字。\n××××××××××\n");
-		// 清空输入缓冲区
 		int ch;
 		while ((ch = getchar()) != '\n' && ch != EOF);
 		Z_A_A();
@@ -101,11 +111,11 @@ void Z_A_A(void)
 	{
 		Z_B_D();
 	}
-	/*else
+	else
 	{
 		printf("\a——————————————————\n请按已有的选项输入\n——————————————————\n");
 		Z_A_A();
-	}*/
+	}
 	return;
 }
 
