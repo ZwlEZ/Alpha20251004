@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+//声明函数Z_F_A
+int Z_F_A(int a, int b, int c);
+
 //Z_C_A项数生成
 int Z_C_A(int A)
 {
@@ -33,26 +36,48 @@ int Z_C_A(int A)
 
 //Z_E_A鼓励与表扬
 void Z_E_A(int a)
-{
+{	
+	//1-5随机输出表扬
 	if (a == 1)
 	{
-		printf("干得漂亮！\n");
+		printf("  干得漂亮！\n");
 	}
 	else if (a == 2)
 	{
-		printf("真棒！\n");
+		printf("  真棒！\n");
 	}
 	else if (a == 3)
 	{
-		printf("继续加油！\n");
+		printf("  继续加油！\n");
 	}
 	else if (a == 4)
 	{
-		printf("你是最棒的！\n");
+		printf("  你是最棒的！\n");
 	}
 	else if (a == 5)
 	{
-		printf("你真聪明！\n");
+		printf("  你真聪明！\n");
+	}
+	//鼓励
+	if (a == 6)
+	{
+		printf("  加油，你可以的！\n");
+	}
+	else if (a == 7)
+	{
+		printf("  不要气馁，继续努力！\n");
+	}
+	else if (a == 8)
+	{
+		printf("  失败是成功之母！\n");
+	}
+	else if (a == 9)
+	{
+		printf("  只要努力就会有收获！\n");
+	}
+	else if (a == 10)
+	{
+		printf("  失败乃成功之母！\n");
 	}
 	return;
 }
@@ -60,15 +85,14 @@ void Z_E_A(int a)
 //判断整数模块
 void Z_D_A(int a, int b)
 {
-	printf("正确答案是：%d", a);
-	printf("  你的答案是：%d\n", b);
+	printf("正确答案是：%d  你的答案是：%d", a, b);
 	if (a == b)
 	{
-
+		Z_E_A(rand() % 5 + 1);
 	}
 	else
 	{
-
+		Z_E_A(rand() % 5 + 6);
 	}
 	return;
 }
@@ -109,9 +133,17 @@ void Z_B_A(void)
 		{
 			printf("%d + %d = ", z = Z_C_A(a), y = Z_C_A(b));
 			sum = z + y;
-			scanf("%d", &d);
+			if (scanf("%d", &d) != 1) {
+				printf("\a输入无效，请输入一个数字。\n");
+				int ch;
+				while ((ch = getchar()) != '\n' && ch != EOF);
+				--i; // 保证本题重新输入
+				continue;
+			}
 			Z_D_A(sum, d);
 		}
+		if (i == c)
+			Z_F_A(a, b, c);//回调与终结
 	}
 	return;
 }
@@ -144,14 +176,22 @@ void Z_B_B(void)
 		{
 			printf("%d - %d = ", z = Z_C_A(a), y = Z_C_A(b));
 			sum = z - y;
-			scanf("%d", &d);
+			if (scanf("%d", &d) != 1) {
+				printf("\a输入无效，请输入一个数字。\n");
+				int ch;
+				while ((ch = getchar()) != '\n' && ch != EOF);
+				--i; // 保证本题重新输入
+				continue;
+			}
 			Z_D_A(sum, d);
 		}
+		if (i == c)
+			Z_F_A(a, b, c);//回调与终结
 	}
 	return;
 }
 //Z_B_C乘法生成
-void Z_B_C(void)
+void Z_B_C()
 {
 	printf("*>乘法运算<*\n*——————————————————————————*\n需要输入三个数字\n一次输入用空格，隔开\n也可单次输入，输入三次\n前两个数字为算式前后两项的位\n后一个数字是题目的倒数\n题目个数不能为0\n*——————————————————————————*\n退出程序输入：0 0 0\n个位项输入：1\n十位项输入：2\n百位项输入：3\n千位项输入：4\n万位项输入：5\n");
 	int a, b, c, d, y, z, sum, i;
@@ -179,16 +219,25 @@ void Z_B_C(void)
 		{
 			printf("%d × %d = ", z = Z_C_A(a), y = Z_C_A(b));
 			sum = z * y;
-			scanf("%d", &d);
+			if (scanf("%d", &d) != 1) {
+				printf("\a输入无效，请输入一个数字。\n");
+				int ch;
+				while ((ch = getchar()) != '\n' && ch != EOF);
+				--i; // 保证本题重新输入
+				continue;
+			}
 			Z_D_A(sum, d);
 		}
+		if (i == c)
+			Z_F_A(a, b, c);//回调与终结
 	}
 	return;
 }
 //Z_B_D_A后项为个位数时除法生成
 void Z_B_D_A(int a, int b, int c)
 {
-	for (int i = 0; i < c; i++)
+	int i;
+	for (i = 0; i < c; i++)
 	{
 		float d = (float)Z_C_A(a);//前项
 		float e = (float)Z_C_A(b);//后项
@@ -197,28 +246,47 @@ void Z_B_D_A(int a, int b, int c)
 		if (e == 0)
 			++e;//防止除数为0
 		printf("%.2f ÷ %.2f = ", d, e);//提示
-		scanf("%f", &F);//输入等号右边
+		if (scanf("%f", &F) != 1) // 输入等号右边并检查返回值
+		{
+			printf("\a输入无效，请输入一个数字。\n");
+			int ch;
+			while ((ch = getchar()) != '\n' && ch != EOF);
+			--i; // 保证本题重新输入
+			continue;
+		}
 		Z_D_B(sum, F);//判断模块
 	}
+	if (i == c)
+		Z_F_A(a, b, c);//回调与终结
 	return;
 }
 //Z_B_D_B后项不为个位数时除法生成
 void Z_B_D_B(int a, int b, int c)
 {
-	for (int i = 0; i < c; i++)
+	int i;
+	for (i = 0; i < c; i++)
 	{
 		float d = (float)Z_C_A(a);
 		float e = (float)Z_C_A(b);
 		float sum = d / e;
 		float F;
 		printf("%.2f ÷ %.2f = ",d , e);
-		scanf("%f", &F);
+		if (scanf("%f", &F) != 1) // 输入等号右边并检查返回值
+		{
+			printf("\a输入无效，请输入一个数字。\n");
+			int ch;
+			while ((ch = getchar()) != '\n' && ch != EOF);
+			--i; // 保证本题重新输入
+			continue;
+		}
 		Z_D_B(sum, F);
 	}
+	if (i == c)
+		Z_F_A(a, b, c);//回调与终结
 	return;
 }
 //Z_B_D除法生成选择器
-void Z_B_D(void)
+void Z_B_D()
 {
 	printf("*>除法运算<*\n*——————————————————————————*\n需要输入三个数字\n一次输入用空格，隔开\n也可单次输入，输入三次\n前两个数字为算式前后两项的位\n后一个数字是题目的倒数\n题目个数不能为0\n*——————————————————————————*\n退出程序输入：0 0 0\n个位项输入：1\n十位项输入：2\n百位项输入：3\n千位项输入：4\n万位项输入：5\n");
 	int a, b, c;
@@ -255,7 +323,7 @@ void Z_B_D(void)
 void PrintMITLicense(void)
 {
 	printf(
-		"\n-------------------------------------------------------------------------------------------\n"
+		"\n——————————————————————————————————————————————————————————————————————————————————\n"
 		"MIT License\n\n"
 		"Copyright (c) 2025 ZwlLoveCHN1949101\n\n"
 		"Permission is hereby granted, free of charge, to any person obtaining a copy\n"
@@ -273,14 +341,14 @@ void PrintMITLicense(void)
 		"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n"
 		"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n"
 		"SOFTWARE.\n"
-		"-------------------------------------------------------------------------------------------\n\n"
+		"——————————————————————————————————————————————————————————————————————————————————\n\n"
 	);
 }
 
 //首
 void Z_A_A(void)
 {
-	printf("退出程序输入：0\n加法运算输入：1\n减法运算输入：2\n乘法运算输入：3\n除法运算输入：4\n查看《MIT License》输入：5\n");
+	printf("*>开始<*\n退出程序输入：0\n加法运算输入：1\n减法运算输入：2\n乘法运算输入：3\n除法运算输入：4\n查看《MIT License》输入：5\n");
 	int a;
 	if (scanf("%d", &a) != 1)
 	{
@@ -323,15 +391,66 @@ void Z_A_A(void)
 	return;
 }
 
+//回调与终结Z_F_A
+int Z_F_A(int a, int b, int c)
+{
+	printf(
+		"**************************************\n"
+		"感谢使用本程序。\n"
+		"本程序由【ZwlLoveCHN1949101】编写。\n"
+		"**************************************\n"
+		"*=—————————————————————————————————————————=*\n"
+		"*>继续<*\n退出程序输入：0\n加法运算输入：1\n减法运算输入：2\n乘法运算输入：3\n除法运算输入：4\n查看《MIT License》输入：5\n"
+		"*=—————————————————————————————————————————=*\n"
+	);
+	int d;
+	if (scanf("%d", &d) != 1)
+	{
+		printf("\a");
+		int ch;
+		while ((ch = getchar()) != '\n' && ch != EOF);
+	}
+	if (d == 0)
+	{
+		exit(0);
+	}
+	else if (d == 1)
+	{
+		Z_B_A();
+	}
+	else if (d == 2)
+	{
+		Z_B_B();
+	}
+	else if (d == 3)
+	{
+		Z_B_C();
+	}
+	else if (d == 4)
+	{
+		Z_B_D();
+	}
+	else if (d == 5)
+	{
+		PrintMITLicense();
+		Z_F_A(a, b, c);
+	}
+	else
+	{
+		printf("\a——————————————————\n请按已有的选项输入\n——————————————————\n");
+		Z_F_A(a, b, c);
+	}
+	return 0;
+}
+
 //Z测试函数
 char Z_test(float a)
 {
 	char s[] = { 0 };
 	char* p = s;
 	
-	return s;
+	return s[0];
 }
-
 
 //主
 int main()
