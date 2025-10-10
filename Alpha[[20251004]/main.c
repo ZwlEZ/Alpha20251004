@@ -20,7 +20,6 @@ void Z_F_B(int i, int E)
 	return;
 }
 
-
 //Z_C_A项数生成
 int Z_C_A(int A)
 {
