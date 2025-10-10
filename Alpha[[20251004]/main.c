@@ -5,6 +5,21 @@
 
 //声明函数Z_F_A
 int Z_F_A(int, int, int);
+//Z_F_B函数终结
+void Z_F_B(int i, int E)
+{
+	int N = i - E;//错误题数
+	printf(
+		"*****======================*****\n"
+		"\t*>终结<*\n"
+		"你本次一共做了%d题。\n"
+		"你本次答对了%d题。\n"
+		"你本次答错了%d题。\n"
+		"*****======================*****\n"
+		,i , E, N);
+	return;
+}
+
 
 //Z_C_A项数生成
 int Z_C_A(int A)
@@ -83,31 +98,48 @@ void Z_E_A(int a)
 }
 
 //判断整数模块
-void Z_D_A(int a, int b)
+int Z_D_A(int a, int b)
 {
+	int E = 0;
 	printf("正确答案是：%d  你的答案是：%d", a, b);
 	if (a == b)
 	{
+		++E;
+		printf(" √");
 		Z_E_A(rand() % 5 + 1);
 	}
 	else
 	{
+		printf(" ×");
 		Z_E_A(rand() % 5 + 6);
 	}
-	return;
+	return E;
 }
 //判断小数模块
-void Z_D_B(float a, float b)
+int Z_D_B(float ZDBa, float ZDBb)
 {
-	printf("正确答案是：%.2f", a);
-	printf("  你的答案是：%.2f\n", b);
-	return;
+	float a = (float)((int)(ZDBa * 100 + 0.5)) / 100;//四舍五入保留两位小数
+	float b = (float)((int)(ZDBb * 100 + 0.5)) / 100;
+	int E = 0;
+	printf("正确答案是：%.2f  你的答案是：%.2f", a, b);
+	if (a == b)
+	{
+		++E;
+		printf(" √");
+		Z_E_A(rand() % 5 + 1);
+	}
+	else
+	{
+		printf(" ×");
+		Z_E_A(rand() % 5 + 6);
+	}
+	return E;
 }
 
 //Z_B_A加法生成
 void Z_B_A(int ZBAa, int ZBAb, int ZBAc)
 {
-	int a = 0, b = 0, c =0, d, y, z, sum, i;//a位数选择，b位数选择，c题数选择，d用户输入，y前项，z后项，sum正确答案，i循环变量
+	int a = 0, b = 0, c = 0, d, y, z, sum, i, E = 0;//E为正确题数，a位数选择，b位数选择，c题数选择，d用户输入，y前项，z后项，sum正确答案，i循环变量
 	if(ZBAa!=0 && ZBAb != 0 && ZBAc != 0) a = ZBAa, b = ZBAb, c = ZBAc;
 	if (a == 0 && b == 0 && c == 0)
 	{
@@ -144,17 +176,20 @@ void Z_B_A(int ZBAa, int ZBAb, int ZBAc)
 				--i; // 保证本题重新输入
 				continue;
 			}
-			Z_D_A(sum, d);
+			E += Z_D_A(sum, d);
 		}
 		if (i == c)
+		{
+			Z_F_B(i, E);//终结
 			Z_F_A(a, b, c);//回调与终结
+		}
 	}
 	return;
 }
 //Z_B_B减法生成
 void Z_B_B(int ZBBa, int ZBBb, int ZBBc)
 {
-	int a = 0, b = 0, c = 0, d, y, z, sum, i;
+	int a = 0, b = 0, c = 0, d, y, z, sum, i, E = 0;
 	if (ZBBa != 0 && ZBBb != 0 && ZBBc != 0) a = ZBBa, b = ZBBb, c = ZBBc;
 	if (a == 0 && b == 0 && c == 0)
 	{
@@ -191,17 +226,20 @@ void Z_B_B(int ZBBa, int ZBBb, int ZBBc)
 				--i; // 保证本题重新输入
 				continue;
 			}
-			Z_D_A(sum, d);
+			E += Z_D_A(sum, d);
 		}
 		if (i == c)
+		{
+			Z_F_B(i, E);//终结
 			Z_F_A(a, b, c);//回调与终结
+		}
 	}
 	return;
 }
 //Z_B_C乘法生成
 void Z_B_C(int ZBCa, int ZBCb, int ZBCc)
 {
-	int a = 0, b = 0, c = 0, d, y, z, sum, i;
+	int a = 0, b = 0, c = 0, d, y, z, sum, i, E = 0;
 	if (ZBCa != 0 && ZBCb != 0 && ZBCc != 0) a = ZBCa, b = ZBCb, c = ZBCc;
 	if (a == 0 && b == 0 && c == 0)
 	{
@@ -238,24 +276,27 @@ void Z_B_C(int ZBCa, int ZBCb, int ZBCc)
 				--i; // 保证本题重新输入
 				continue;
 			}
-			Z_D_A(sum, d);
+			E += Z_D_A(sum, d);
 		}
 		if (i == c)
+		{
+			Z_F_B(i, E);//终结
 			Z_F_A(a, b, c);//回调与终结
+		}
 	}
 	return;
 }
 //Z_B_D_A后项为个位数时除法生成
 void Z_B_D_A(int a, int b, int c)
 {
-	int i;
+	int i, E = 0;
 	for (i = 0; i < c; i++)
 	{
 		float d = (float)Z_C_A(a);//前项
 		float e = (float)Z_C_A(b);//后项
+		if (e == 0) ++e;//防止除数为0
 		float sum = d / e;
 		float F;
-		if (e == 0) ++e;//防止除数为0
 		printf("%.2f ÷ %.2f = ", d, e);//提示
 		if (scanf("%f", &F) != 1) // 输入等号右边并检查返回值
 		{
@@ -265,16 +306,19 @@ void Z_B_D_A(int a, int b, int c)
 			--i; // 保证本题重新输入
 			continue;
 		}
-		Z_D_B(sum, F);//判断模块
+		E += Z_D_B(sum, F);//判断
 	}
 	if (i == c)
+	{
+		Z_F_B(i, E);//终结
 		Z_F_A(a, b, c);//回调与终结
+	}
 	return;
 }
 //Z_B_D_B后项不为个位数时除法生成
 void Z_B_D_B(int a, int b, int c)
 {
-	int i;
+	int i, E = 0;
 	for (i = 0; i < c; i++)
 	{
 		float d = (float)Z_C_A(a);
@@ -290,10 +334,13 @@ void Z_B_D_B(int a, int b, int c)
 			--i; // 保证本题重新输入
 			continue;
 		}
-		Z_D_B(sum, F);
+		E += Z_D_B(sum, F);//判断
 	}
 	if (i == c)
+	{
+		Z_F_B(i, E);//终结
 		Z_F_A(a, b, c);//回调与终结
+	}
 	return;
 }
 //Z_B_D除法生成选择器
@@ -325,10 +372,12 @@ void Z_B_D(int ZBDa, int ZBDb, int ZBDc)
 	}
 	if (b == 1)
 	{
+		printf("提示：除法结果保留两位小数。\n");
 		Z_B_D_A(a, b, c);
 	}
 	else
 	{
+		printf("提示：除法结果保留两位小数。\n");
 		Z_B_D_B(a, b, c);
 	}
 	return;
