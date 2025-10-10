@@ -443,15 +443,6 @@ int Z_F_A(int a, int b, int c)
 	return 0;
 }
 
-//Z测试函数
-char Z_test(float a)
-{
-	char s[] = { 0 };
-	char* p = s;
-	
-	return s[0];
-}
-
 //主
 int main()
 {
