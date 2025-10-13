@@ -17,6 +17,16 @@ void Z_A_B(void)
 	return;
 }
 
+//清屏函数
+void ClearScreen(void)
+{
+#if defined(_WIN32) || defined(_WIN64)
+	system("cls");
+#else
+	system("clear");
+#endif
+}
+
 //Z_H_A函数清除输入缓冲区
 void Z_H_A(void)
 {
@@ -313,9 +323,9 @@ void Z_B_C(int ZBCa, int ZBCb, int ZBCc)
 	}
 	else
 	{
+		int T = 1;
 		for (i = 0; i < c; i++)
 		{
-			int T = 1;
 			printf("  第%d提：%d × %d = ", T, z = Z_C_A(a), y = Z_C_A(b));
 			sum = z * y;
 			if (scanf("%d", &d) != 1) {
@@ -441,6 +451,7 @@ void Z_B_D(int ZBDa, int ZBDb, int ZBDc)
 //MIT License
 void PrintMITLicense(void)
 {
+	ClearScreen();
 	printf(
 		"\n——————————————————————————————————————————————————————————————————————————————————\n"
 		"MIT License\n\n"
@@ -470,6 +481,7 @@ void ShowScores()
 	FILE* fp = fopen("EXP.txt", "r");
 	char line[128];
 	if (fp) {
+		ClearScreen();
 		printf(
 			"+++++++++++++++++++++++++++++++++\n"
 			"历史成绩：\n");
