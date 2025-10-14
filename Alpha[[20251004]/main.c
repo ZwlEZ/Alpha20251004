@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <wchar.h>
+#include <locale.h>
 
 //欢迎界面
 void Z_A_B(void)
@@ -162,11 +164,11 @@ int Z_D_A(int a, int b)
 //判断小数模块
 int Z_D_B(float ZDBa, float ZDBb)
 {
-	float a = (float)((int)(ZDBa * 100 + 0.5)) / 100;//四舍五入保留两位小数
+	//float a = (float)((int)(ZDBa * 100 + 0.5)) / 100;//四舍五入保留两位小数
 	float b = (float)((int)(ZDBb * 100 + 0.5)) / 100;
 	int E = 0;
-	printf("正确答案是：%.2f  你的答案是：%.2f", a, b);
-	if (a == b)
+	printf("正确答案是：%.2f  你的答案是：%.2f", ZDBa, b);
+	if (ZDBa == b)
 	{
 		++E;
 		printf(" √");
@@ -349,14 +351,19 @@ void Z_B_C(int ZBCa, int ZBCb, int ZBCc)
 void Z_B_D_A(int a, int b, int c)
 {
 	int i, E = 0, T = 1;
+	float d, e, h, sum, F;
+	wchar_t hao = 0;
 	for (i = 0; i < c; i++)
 	{
-		float d = (float)Z_C_A(a);//前项
-		float e;//后项
+		d = (float)Z_C_A(a);//前项
 		e = (float)(rand() % 9 + 1);//生成1-9的随机数，防止除数为0
-		float sum = d / e;//正确答案
-		float F;
-		printf("  第%d提：%.2f ÷ %.2f = ", T, d, e);//提示
+		sum = d / e;//正确答案
+		h = (float)((int)(sum * 100 + 0.5)) / 100;//四舍五入保留两位小数
+		if (h == sum)
+			hao = '=';//等于
+		else
+			hao = L'≈';//四舍五入
+		wprintf(L"  第%d提：%.0f ÷ %.0f %c ", T, d, e, hao);
 		if (scanf("%f", &F) != 1) // 输入等号右边并检查返回值
 		{
 			printf("\a输入无效，请输入一个数字。\n");
@@ -364,7 +371,7 @@ void Z_B_D_A(int a, int b, int c)
 			--i; // 保证本题重新输入
 			continue;
 		}
-		E += Z_D_B(sum, F);//判断
+		E += Z_D_B(h, F);//判断
 		T++;
 	}
 	if (i == c)
@@ -378,13 +385,20 @@ void Z_B_D_A(int a, int b, int c)
 void Z_B_D_B(int a, int b, int c)
 {
 	int i, E = 0, T = 1;
+	float d, e, h ,sum, F;
+	wchar_t hao = 0;
 	for (i = 0; i < c; i++)
 	{
-		float d = (float)Z_C_A(a);
-		float e = (float)Z_C_A(b);
-		float sum = d / e;
-		float F;
-		printf("  第%d提：%.2f ÷ %.2f = ", T , d , e);
+		d = (float)Z_C_A(a);
+		e = (float)Z_C_A(b);
+		sum = d / e;
+		printf("%.3f", sum);
+		h = (float)((int)(sum * 100 + 0.5)) / 100;//四舍五入保留两位小数
+		if (h == sum)
+			hao = '=';//等于
+		else
+			hao = L'≈';//四舍五入
+		wprintf(L"  第%d提：%.0f ÷ %.0f %c ", T, d, e, hao);
 		if (scanf("%f", &F) != 1) // 输入等号右边并检查返回值
 		{
 			printf("\a输入无效，请输入一个数字。\n");
@@ -392,7 +406,7 @@ void Z_B_D_B(int a, int b, int c)
 			--i; // 保证本题重新输入
 			continue;
 		}
-		E += Z_D_B(sum, F);//判断
+		E += Z_D_B(h, F);//判断
 		T++;
 	}
 	if (i == c)
@@ -632,6 +646,7 @@ int Z_F_A(int a, int b, int c,int e)
 //主
 int main()
 {
+	setlocale(LC_ALL, "");
 	printf("本程序由【ZwlLoveCHN1949101】编写。\n");
 	Z_A_B();
 	srand((unsigned int)time(NULL));
