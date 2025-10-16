@@ -101,44 +101,44 @@ void Z_E_A(int a)
 	//1-5随机输出表扬
 	if (a == 1)
 	{
-		printf("  干得漂亮！\n");
+		printf("  干得漂亮！");
 	}
 	else if (a == 2)
 	{
-		printf("  真棒！\n");
+		printf("  真棒！");
 	}
 	else if (a == 3)
 	{
-		printf("  继续加油！\n");
+		printf("  继续加油！");
 	}
 	else if (a == 4)
 	{
-		printf("  你是最棒的！\n");
+		printf("  你是最棒的！");
 	}
 	else if (a == 5)
 	{
-		printf("  你真聪明！\n");
+		printf("  你真聪明！");
 	}
 	//鼓励
 	if (a == 6)
 	{
-		printf("  加油，你可以的！\n");
+		printf("  加油，你可以的！");
 	}
 	else if (a == 7)
 	{
-		printf("  不要气馁，继续努力！\n");
+		printf("  不要气馁，继续努力！");
 	}
 	else if (a == 8)
 	{
-		printf("  失败是成功之母！\n");
+		printf("  失败是成功之母！");
 	}
 	else if (a == 9)
 	{
-		printf("  只要努力就会有收获！\n");
+		printf("  只要努力就会有收获！");
 	}
 	else if (a == 10)
 	{
-		printf("  失败乃成功之母！\n");
+		printf("  失败乃成功之母！");
 	}
 	return;
 }
@@ -164,7 +164,6 @@ int Z_D_A(int a, int b)
 //判断小数模块
 int Z_D_B(float ZDBa, float ZDBb)
 {
-	//float a = (float)((int)(ZDBa * 100 + 0.5)) / 100;//四舍五入保留两位小数
 	float b = (float)((int)(ZDBb * 100 + 0.5)) / 100;
 	int E = 0;
 	printf("正确答案是：%.2f  你的答案是：%.2f", ZDBa, b);
@@ -230,6 +229,10 @@ void Z_B_A(int ZBAa, int ZBAb, int ZBAc)
 				continue;
 			}
 			E += Z_D_A(sum, d);
+			if(T == c)
+				printf("  做完了。\n");
+			else
+				printf("  题目剩余数量：%d\n", c - T);
 			T++;
 		}
 		if (i == c)
@@ -287,6 +290,10 @@ void Z_B_B(int ZBBa, int ZBBb, int ZBBc)
 				continue;
 			}
 			E += Z_D_A(sum, d);
+			if (T == c)
+				printf("  做完了。\n");
+			else
+				printf("  题目剩余数量：%d\n", c - T);
 			T++;
 		}
 		if (i == c)
@@ -337,6 +344,10 @@ void Z_B_C(int ZBCa, int ZBCb, int ZBCc)
 				continue;
 			}
 			E += Z_D_A(sum, d);
+			if (T == c)
+				printf("  做完了。\n");
+			else
+				printf("  题目剩余数量：%d\n", c - T);
 			T++;
 		}
 		if (i == c)
@@ -372,6 +383,10 @@ void Z_B_D_A(int a, int b, int c)
 			continue;
 		}
 		E += Z_D_B(h, F);//判断
+		if (T == c)
+			printf("  做完了。\n");
+		else
+			printf("  题目剩余数量：%d\n", c - T);
 		T++;
 	}
 	if (i == c)
@@ -407,6 +422,10 @@ void Z_B_D_B(int a, int b, int c)
 			continue;
 		}
 		E += Z_D_B(h, F);//判断
+		if (T == c)
+			printf("  做完了。\n");
+		else
+			printf("  题目剩余数量：%d\n", c - T);
 		T++;
 	}
 	if (i == c)
