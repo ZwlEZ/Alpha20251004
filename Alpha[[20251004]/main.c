@@ -5,21 +5,22 @@
 #include <wchar.h>
 #include <locale.h>
 
-//欢迎界面
-void Z_A_B(void)
+// 欢迎界面
+void ShowWelcomeMessage(void)
 {
-	printf(
-		"*****======================*****\n"
-		"\t*>欢迎使用<*\n"
-		"本程序是一个四则运算练习程序\n"
-		"你可以选择加减乘除进行练习\n"
-		"也可以选择题目的难度和题目数量\n"
-		"祝你使用愉快！\n"
-		"*****======================*****\n");
+	wprintf(
+		L"*****======================*****\n"
+		L"\t*>欢迎使用<*\n"
+		L"本程序是一个四则运算练习程序\n"
+		L"你可以选择加减乘除进行练习\n"
+		L"也可以选择题目的难度和题目数量\n"
+		L"祝你使用愉快！\n"
+		L"此程序为第三代\n"
+		L"*****======================*****\n");
 	return;
 }
 
-//清屏函数
+// 清屏函数
 void ClearScreen(void)
 {
 #if defined(_WIN32) || defined(_WIN64)
@@ -29,15 +30,15 @@ void ClearScreen(void)
 #endif
 }
 
-//Z_H_A函数清除输入缓冲区
-void Z_H_A(void)
+// ClearInputBuffer函数清除输入缓冲区
+void ClearInputBuffer(void)
 {
 	int ch = 0;
 	while ((ch = getchar()) != '\n' && ch != EOF);
 	return;
 }
 
-//成绩保存函数
+// 成绩保存函数
 void SaveScore(int total, int correct, int wrong)
 {
 	FILE* fp = fopen("EXP.txt", "a"); // 追加模式
@@ -46,13 +47,11 @@ void SaveScore(int total, int correct, int wrong)
 		fclose(fp);
 	}
 	else {
-		printf("\a\a成绩保存失败！\n");
+		printf("\a成绩保存失败！\n");
 	}
 }
 
-//声明函数Z_F_A
-int Z_F_A(int, int, int, int);
-//Z_F_B总结函数
+// Z_F_B总结函数
 void Z_F_B(int i, int E)
 {
 	int N = i - E;//错误题数
@@ -68,120 +67,123 @@ void Z_F_B(int i, int E)
 	return;
 }
 
-//Z_C_A项数生成
-int Z_C_A(int A)
+// 项数生成
+int GenerateNumberByDigit(int digitLevel)
 {
 	int q = 0;
-	if (A == 1)
-	{//生成个位数
+	if (digitLevel == 1)
+	{// 生成个位数
 		q = rand() % 10;
 	}
-	else if (A == 2)
-	{//生成十位数
+	else if (digitLevel == 2)
+	{// 生成十位数
 		q = rand() % (99 - 10 + 1) + 10;
 	}
-	else if (A == 3)
-	{//生成百位数
+	else if (digitLevel == 3)
+	{// 生成百位数
 		q = rand() % (999 - 100 + 1) + 100;
 	}
-	else if (A == 4)
-	{//生成千位数
+	else if (digitLevel == 4)
+	{// 生成千位数
 		q = rand() % (9999 - 1000 + 1) + 1000;
 	}
-	else if (A == 5)
-	{//生成万位数
+	else if (digitLevel == 5)
+	{// 生成万位数
 		q = rand() % (99999 - 10000 + 1) + 10000;
 	}
 	return q;
 }
 
-//Z_E_A鼓励与表扬
-void Z_E_A(int a)
+// ShowEncouragement鼓励与表扬
+void ShowEncouragement(int type)
 {	
-	//1-5随机输出表扬
-	if (a == 1)
+	// 1-5随机输出表扬
+	if (type == 1)
 	{
 		printf("  干得漂亮！");
 	}
-	else if (a == 2)
+	else if (type == 2)
 	{
 		printf("  真棒！");
 	}
-	else if (a == 3)
+	else if (type == 3)
 	{
 		printf("  继续加油！");
 	}
-	else if (a == 4)
+	else if (type == 4)
 	{
 		printf("  你是最棒的！");
 	}
-	else if (a == 5)
+	else if (type == 5)
 	{
 		printf("  你真聪明！");
 	}
-	//鼓励
-	if (a == 6)
+	// 鼓励
+	if (type == 6)
 	{
 		printf("  加油，你可以的！");
 	}
-	else if (a == 7)
+	else if (type == 7)
 	{
 		printf("  不要气馁，继续努力！");
 	}
-	else if (a == 8)
+	else if (type == 8)
 	{
 		printf("  失败是成功之母！");
 	}
-	else if (a == 9)
+	else if (type == 9)
 	{
 		printf("  只要努力就会有收获！");
 	}
-	else if (a == 10)
+	else if (type == 10)
 	{
 		printf("  失败乃成功之母！");
 	}
 	return;
 }
 
-//判断整数模块
-int Z_D_A(int a, int b)
+// 判断整数模块
+int CheckIntegerAnswer(int correct, int userAnswer)
 {
 	int E = 0;
-	printf("正确答案是：%d  你的答案是：%d", a, b);
-	if (a == b)
+	printf("正确答案是：%d  你的答案是：%d", correct, userAnswer);
+	if (correct == userAnswer)
 	{
 		++E;
 		printf(" √");
-		Z_E_A(rand() % 5 + 1);
+		ShowEncouragement(rand() % 5 + 1);
 	}
 	else
 	{
 		printf(" ×");
-		Z_E_A(rand() % 5 + 6);
+		ShowEncouragement(rand() % 5 + 6);
 	}
 	return E;
 }
-//判断小数模块
-int Z_D_B(float ZDBa, float ZDBb)
+// 判断小数模块
+int CheckFloatAnswer(float correct, float userAnswer)
 {
-	float b = (float)((int)(ZDBb * 100 + 0.5)) / 100;
+	float b = (float)((int)(userAnswer * 100 + 0.5)) / 100;
 	int E = 0;
-	printf("正确答案是：%.2f  你的答案是：%.2f", ZDBa, b);
-	if (ZDBa == b)
+	printf("正确答案是：%.2f  你的答案是：%.2f", correct, b);
+	if (correct == b)
 	{
 		++E;
 		printf(" √");
-		Z_E_A(rand() % 5 + 1);
+		ShowEncouragement(rand() % 5 + 1);
 	}
 	else
 	{
 		printf(" ×");
-		Z_E_A(rand() % 5 + 6);
+		ShowEncouragement(rand() % 5 + 6);
 	}
 	return E;
 }
 
-//Z_B_A加法生成
+// 回调与终结Z_F_A
+int Z_F_A(int, int, int, int);
+
+// Z_B_A加法生成
 void Z_B_A(int ZBAa, int ZBAb, int ZBAc)
 {
 	int a = 0, b = 0, c = 0, d, y, z, sum, i, E = 0;//E为正确题数，a位数选择，b位数选择，c题数选择，d用户输入，y前项，z后项，sum正确答案，i循环变量
@@ -199,7 +201,7 @@ void Z_B_A(int ZBAa, int ZBAb, int ZBAc)
 		if (scanf("%d%d%d", &a, &b, &c) != 3)
 		{
 			printf("\a××××××××××\n输入无效，请输入三个数字。\n××××××××××\n");
-			Z_H_A();
+			ClearInputBuffer();
 			Z_B_A(0, 0, 0);
 			return;
 		}
@@ -219,16 +221,16 @@ void Z_B_A(int ZBAa, int ZBAb, int ZBAc)
 		int T = 1;
 		for (i = 0; i < c; i++)
 		{
-			printf("  第%d提：%d + %d = ", T, z = Z_C_A(a), y = Z_C_A(b));
+			printf("  第%d提：%d + %d = ", T, z = GenerateNumberByDigit(a), y = GenerateNumberByDigit(b));
 			sum = z + y;
 			if (scanf("%d", &d) != 1)
 			{
 				printf("\a输入无效，请输入一个数字。\n");
-				Z_H_A();
+				ClearInputBuffer();
 				--i; // 保证本题重新输入
 				continue;
 			}
-			E += Z_D_A(sum, d);
+			E += CheckIntegerAnswer(sum, d);
 			if(T == c)
 				printf("  做完了。\n");
 			else
@@ -243,7 +245,7 @@ void Z_B_A(int ZBAa, int ZBAb, int ZBAc)
 	}
 	return;
 }
-//Z_B_B减法生成
+// Z_B_B减法生成
 void Z_B_B(int ZBBa, int ZBBb, int ZBBc)
 {
 	int a = 0, b = 0, c = 0, d, y, z, sum, i, E = 0;
@@ -261,7 +263,7 @@ void Z_B_B(int ZBBa, int ZBBb, int ZBBc)
 		if (scanf("%d%d%d", &a, &b, &c) != 3)
 		{
 			printf("\a××××××××××\n输入无效，请输入三个数字。\n××××××××××\n");
-			Z_H_A();
+			ClearInputBuffer();
 			Z_B_B(0, 0, 0);
 			return;
 		}
@@ -281,15 +283,15 @@ void Z_B_B(int ZBBa, int ZBBb, int ZBBc)
 		int T = 1;
 		for (i = 0; i < c; i++)
 		{
-			printf("  第%d提：%d - %d = ", T, z = Z_C_A(a), y = Z_C_A(b));
+			printf("  第%d提：%d - %d = ", T, z = GenerateNumberByDigit(a), y = GenerateNumberByDigit(b));
 			sum = z - y;
 			if (scanf("%d", &d) != 1) {
 				printf("\a输入无效，请输入一个数字。\n");
-				Z_H_A();
+				ClearInputBuffer();
 				--i; // 保证本题重新输入
 				continue;
 			}
-			E += Z_D_A(sum, d);
+			E += CheckIntegerAnswer(sum, d);
 			if (T == c)
 				printf("  做完了。\n");
 			else
@@ -304,7 +306,7 @@ void Z_B_B(int ZBBa, int ZBBb, int ZBBc)
 	}
 	return;
 }
-//Z_B_C乘法生成
+// Z_B_C乘法生成
 void Z_B_C(int ZBCa, int ZBCb, int ZBCc)
 {
 	int a = 0, b = 0, c = 0, d, y, z, sum, i, E = 0;
@@ -315,7 +317,7 @@ void Z_B_C(int ZBCa, int ZBCb, int ZBCc)
 		if (scanf("%d%d%d", &a, &b, &c) != 3)
 		{
 			printf("\a××××××××××\n输入无效，请输入三个数字。\n××××××××××\n");
-			Z_H_A();
+			ClearInputBuffer();
 			Z_B_C(0, 0, 0);
 			return;
 		}
@@ -335,15 +337,15 @@ void Z_B_C(int ZBCa, int ZBCb, int ZBCc)
 		int T = 1;
 		for (i = 0; i < c; i++)
 		{
-			printf("  第%d提：%d × %d = ", T, z = Z_C_A(a), y = Z_C_A(b));
+			printf("  第%d提：%d × %d = ", T, z = GenerateNumberByDigit(a), y = GenerateNumberByDigit(b));
 			sum = z * y;
 			if (scanf("%d", &d) != 1) {
 				printf("\a输入无效，请输入一个数字。\n");
-				Z_H_A();
+				ClearInputBuffer();
 				--i; // 保证本题重新输入
 				continue;
 			}
-			E += Z_D_A(sum, d);
+			E += CheckIntegerAnswer(sum, d);
 			if (T == c)
 				printf("  做完了。\n");
 			else
@@ -358,7 +360,7 @@ void Z_B_C(int ZBCa, int ZBCb, int ZBCc)
 	}
 	return;
 }
-//Z_B_D_A后项为个位数时除法生成
+// Z_B_D_A后项为个位数时除法生成
 void Z_B_D_A(int a, int b, int c)
 {
 	int i, E = 0, T = 1;
@@ -366,7 +368,7 @@ void Z_B_D_A(int a, int b, int c)
 	wchar_t hao = 0;
 	for (i = 0; i < c; i++)
 	{
-		d = (float)Z_C_A(a);//前项
+		d = (float)GenerateNumberByDigit(a);//前项
 		e = (float)(rand() % 9 + 1);//生成1-9的随机数，防止除数为0
 		sum = d / e;//正确答案
 		h = (float)((int)(sum * 100 + 0.5)) / 100;//四舍五入保留两位小数
@@ -378,11 +380,11 @@ void Z_B_D_A(int a, int b, int c)
 		if (scanf("%f", &F) != 1) // 输入等号右边并检查返回值
 		{
 			printf("\a输入无效，请输入一个数字。\n");
-			Z_H_A();
+			ClearInputBuffer();
 			--i; // 保证本题重新输入
 			continue;
 		}
-		E += Z_D_B(h, F);//判断
+		E += CheckFloatAnswer(h, F);//判断
 		if (T == c)
 			printf("  做完了。\n");
 		else
@@ -396,7 +398,7 @@ void Z_B_D_A(int a, int b, int c)
 	}
 	return;
 }
-//Z_B_D_B后项不为个位数时除法生成
+// Z_B_D_B后项不为个位数时除法生成
 void Z_B_D_B(int a, int b, int c)
 {
 	int i, E = 0, T = 1;
@@ -404,8 +406,8 @@ void Z_B_D_B(int a, int b, int c)
 	wchar_t hao = 0;
 	for (i = 0; i < c; i++)
 	{
-		d = (float)Z_C_A(a);
-		e = (float)Z_C_A(b);
+		d = (float)GenerateNumberByDigit(a);
+		e = (float)GenerateNumberByDigit(b);
 		sum = d / e;
 		printf("%.3f", sum);
 		h = (float)((int)(sum * 100 + 0.5)) / 100;//四舍五入保留两位小数
@@ -417,11 +419,11 @@ void Z_B_D_B(int a, int b, int c)
 		if (scanf("%f", &F) != 1) // 输入等号右边并检查返回值
 		{
 			printf("\a输入无效，请输入一个数字。\n");
-			Z_H_A();
+			ClearInputBuffer();
 			--i; // 保证本题重新输入
 			continue;
 		}
-		E += Z_D_B(h, F);//判断
+		E += CheckFloatAnswer(h, F);//判断
 		if (T == c)
 			printf("  做完了。\n");
 		else
@@ -435,7 +437,7 @@ void Z_B_D_B(int a, int b, int c)
 	}
 	return;
 }
-//Z_B_D除法生成选择器
+// Z_B_D除法生成选择器
 void Z_B_D(int ZBDa, int ZBDb, int ZBDc)
 {
 	int a = 0, b = 0, c = 0;
@@ -453,7 +455,7 @@ void Z_B_D(int ZBDa, int ZBDb, int ZBDc)
 		if (scanf("%d%d%d", &a, &b, &c) != 3)
 		{
 			printf("\a××××××××××\n输入无效，请输入三个数字。\n××××××××××\n");
-			Z_H_A();
+			ClearInputBuffer();
 			Z_B_D(0, 0, 0);
 			return;
 		}
@@ -481,7 +483,7 @@ void Z_B_D(int ZBDa, int ZBDb, int ZBDc)
 	return;
 }
 
-//MIT License
+// MIT License
 void PrintMITLicense(void)
 {
 	ClearScreen();
@@ -508,23 +510,87 @@ void PrintMITLicense(void)
 	);
 }
 
-//显示历史成绩
+// 九九乘法表
+void PrintMultiplicationTable(void)
+{
+	unsigned char row, col;
+	ClearScreen();
+	wprintf(L"\n*×========================================================================================================================================================×*\n");
+	for (row = 1; row <= 9; row++)
+	{
+		for (col = 1; col <= 9; col++)
+		{
+			wprintf(L"\t%d × %d = %d",col ,row , row * col);
+			if (row == col)
+			{
+				wprintf(L"\n");
+				break;
+			}
+		}
+	}
+	wprintf(L"*×========================================================================================================================================================×*\n");
+	return;
+}
+
+// 题目生成模块引导加载器（未实现）
+void 题目生成模块引导加载器(void)
+{
+	wprintf(L"");
+}
+// 生成本地题目文件整数（未实现）
+void 生成本地题目文件整数(void)
+{
+	time_t now = time(NULL);
+	if (!(now != (time_t)(-1))) return;
+	struct tm* timeinfo = localtime(&now);// 使用本地时间
+	char filename[100];// 文件名样式
+	strftime(filename, sizeof(filename), "%Y年%m月%d日_%H时%M分%S秒_练习题.txt", timeinfo);
+	// 追加文件
+	FILE* fp = fopen(filename, "a");
+	if (fp)
+	{
+		wprintf(L"生成中……\n");
+		int i, k;
+		for (i = 0; i < 20000; i++)
+		{
+			for (k = 0; k < 8; k++)
+			{
+				fprintf(fp, "测试 %d\t\t", i + 1);
+			}
+			fprintf(fp, "\n");
+		}
+		if (ferror(fp))
+			wprintf(L"写入文件时出错！\n");
+		else
+			wprintf(L"\a生成成功！\n");
+		fclose(fp);
+	}
+	else
+	{
+		wprintf(L"\a生成失败！\n无法创建文件\n");
+	}
+	return;
+}
+
+// 显示历史成绩
 void ShowScores()
 {
 	FILE* fp = fopen("EXP.txt", "r");
 	char line[128];
 	if (fp) {
 		ClearScreen();
-		printf(
-			"+++++++++++++++++++++++++++++++++\n"
-			"历史成绩：\n");
-		while (fgets(line, sizeof(line), fp)) {
+		wprintf(
+			L"+++++++++++++++++++++++++++++++++\n"
+			L"历史成绩：\n");
+		while (fgets(line, sizeof(line), fp))
+		{
 			printf("%s", line);
 		}
-		printf("+++++++++++++++++++++++++++++++++\n");
+		wprintf(L"+++++++++++++++++++++++++++++++++\n");
 		fclose(fp);
 	}
-	else {
+	else
+	{
 		printf("\a暂无历史成绩。\n");
 	}
 }
@@ -532,12 +598,12 @@ void ShowScores()
 //首
 void Z_A_A(void)
 {
-	printf("\t*>开始<*\n退出程序输入：0\n加法运算输入：1\n减法运算输入：2\n乘法运算输入：3\n除法运算输入：4\n查看《MIT License》输入：5\n");
+	printf("\t*>开始<*\n退出程序输入：0\n加法运算输入：1\n减法运算输入：2\n乘法运算输入：3\n除法运算输入：4\n查看九九乘法表输入：5\n查看《MIT License》输入：6\n");
 	int a;
 	if (scanf("%d", &a) != 1)
 	{
 		printf("\a××××××××××\n请按已有的选项输入，数字。\n××××××××××\n");
-		Z_H_A();
+		ClearInputBuffer();
 		Z_A_A();
 		return;
 	}
@@ -596,6 +662,11 @@ void Z_A_A(void)
 	}
 	else if (a == 5)
 	{
+		PrintMultiplicationTable();
+		Z_A_A();
+	}
+	else if (a == 6)
+	{
 		PrintMITLicense();
 		Z_A_A();
 	}
@@ -607,7 +678,6 @@ void Z_A_A(void)
 	return;
 }
 
-//回调与终结Z_F_A
 int Z_F_A(int a, int b, int c,int e)
 {
 	if(e == 1) 
@@ -628,12 +698,13 @@ int Z_F_A(int a, int b, int c,int e)
 		"加法运算输入：6\n减法运算输入：7\n乘法运算输入：8\n除法运算输入：9\n"
 		"*>>—————————————————————————————————————————<<*\n"
 		"回顾输入；10，查看历史成绩\n"
+		"查看九九乘法表输入：11\n"
 	);
 	int d;
 	if (scanf("%d", &d) != 1)
 	{
 		printf("\a");
-		Z_H_A();
+		ClearInputBuffer();
 	}
 	if (d == 0) exit(0);
 	else if (d == 1) Z_B_A(0, 0, 0);
@@ -654,6 +725,11 @@ int Z_F_A(int a, int b, int c,int e)
 		ShowScores();
 		Z_F_A(a, b, c, 0);
 	}
+	else if (d == 11)
+	{
+		PrintMultiplicationTable();
+		Z_F_A(a, b, c, 0);
+	}
 	else
 	{
 		printf("\a——————————————————\n请按已有的选项输入\n——————————————————\n");
@@ -662,12 +738,12 @@ int Z_F_A(int a, int b, int c,int e)
 	return 0;
 }
 
-//主
+// 主
 int main()
 {
 	setlocale(LC_ALL, "");
-	printf("本程序由【ZwlLoveCHN1949101】编写。\n");
-	Z_A_B();
+	wprintf(L"本程序由【ZwlLoveCHN1949101】编写。\n");
+	ShowWelcomeMessage();
 	srand((unsigned int)time(NULL));
 	Z_A_A();
 	return 0;

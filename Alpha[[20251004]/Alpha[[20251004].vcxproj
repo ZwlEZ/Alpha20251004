@@ -139,7 +139,7 @@
     <ResourceCompile Include="Alpha[20251004].rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="C:\Zwl\Zwluser\icon.ico" />
+    <Image Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
