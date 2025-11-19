@@ -376,9 +376,9 @@ void Z_B_D_A(int a, int b, int c)
 		sum = d / e;//正确答案
 		h = (float)((int)(sum * 100 + 0.5)) / 100;//四舍五入保留两位小数
 		if (h == sum)
-			hao = '=';//等于
+			hao = '=';
 		else
-			hao = L'≈';//四舍五入
+			hao = L'≈';
 		wprintf(L"  第%d提：%.0f ÷ %.0f %c ", T, d, e, hao);
 		if (scanf("%f", &F) != 1) // 输入等号右边并检查返回值
 		{
