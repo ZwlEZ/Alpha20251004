@@ -7,20 +7,22 @@ void ClearInputBuffer(void);
 void ShowWelcomeMessage(void);
 void PrintMultiplicationTable(void);
 void 提示消息(指令类*);
-void 善后工作(指令类*);
+void 善后工作(指令类*, 练习用时);
 void 加运算练习(指令类*);
 void 减运算练习(指令类*);
 void 乘运算练习(指令类*);
 void 除运算练习(指令类*);
 void 题目选择项(指令类*);
 void 继续菜单打印(指令类*);
-void 加减乘除运算练习引导重载(指令类*);
-void 加减乘除运算练习引导加载器(指令类*);	// 数据初始化与提醒
+练习用时 加减乘除运算练习引导重载(指令类*);
+练习用时 加减乘除运算练习引导加载器(指令类*);	// 数据初始化与提醒
 int 设置UTF8编码(void);
 int 数(unsigned int);
 int 回调函数(指令类*);
 int 选择命令(指令类*);
 指令类* 初始化运行时(void);
+bool 获取当前时间戳与日历时间(void*, int);
+void 生成本地题目文件整数(void);
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>

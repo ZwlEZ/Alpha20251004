@@ -45,11 +45,13 @@ void ClearInputBuffer(void)
 void SaveScore(int total, int correct, int wrong)
 {
 	FILE* fp = fopen("EXP.txt", "a"); // 追加模式
-	if (fp) {
+	if (fp)
+	{
 		fprintf(fp, "总题数:%d, 正确:%d, 错误:%d\n", total, correct, wrong);
 		fclose(fp);
 	}
-	else {
+	else
+	{
 		printf("\a成绩保存失败！\n");
 	}
 }
