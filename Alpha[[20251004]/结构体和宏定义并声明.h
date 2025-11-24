@@ -58,3 +58,5 @@ typedef struct LXSJ
 
 // 
 #define 感谢使用 1
+#define 运算数据无效 0
+#define 运算数据有效 1

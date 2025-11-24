@@ -7,7 +7,7 @@ void ClearInputBuffer(void);
 void ShowWelcomeMessage(void);
 void PrintMultiplicationTable(void);
 void 提示消息(指令类*);
-void 善后工作(指令类*, 练习用时);
+bool 善后工作(指令类*, 练习用时);
 void 加运算练习(指令类*);
 void 减运算练习(指令类*);
 void 乘运算练习(指令类*);
@@ -23,6 +23,7 @@ int 选择命令(指令类*);
 指令类* 初始化运行时(void);
 bool 获取当前时间戳与日历时间(void*, int);
 void 生成本地题目文件整数(void);
+bool 生成格式化的时间文件名(wchar_t*, size_t, const wchar_t* 首, const wchar_t*, const wchar_t*);
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>

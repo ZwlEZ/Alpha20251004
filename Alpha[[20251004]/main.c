@@ -6,7 +6,8 @@
 #include <locale.h>
 #include <string.h>
 #include <malloc.h>
-#include<stdbool.h>
+#include <math.h>
+#include <stdbool.h>
 
 #include "结构体和宏定义并声明.h"
 #include "函数声明.h"
@@ -54,7 +55,7 @@ int 回调函数(指令类* 执行)
 		case 除法:
 		{
 			练习用时 时间指针集 = 加减乘除运算练习引导加载器(执行);
-			善后工作(执行, 时间指针集);
+			if (!善后工作(执行, 时间指针集)) break;
 		}
 			return 执行->工作 = 继续;
 		case 5:
@@ -77,7 +78,7 @@ int 回调函数(指令类* 执行)
 		case 除法:
 		{
 			练习用时 时间指针集 = 加减乘除运算练习引导加载器(执行);
-			善后工作(执行, 时间指针集);
+			if (!善后工作(执行, 时间指针集)) break;
 		}
 			return 执行->工作 = 继续;
 		case 回调加法:
@@ -86,7 +87,7 @@ int 回调函数(指令类* 执行)
 		case 回调除法:
 		{
 			练习用时 时间指针集 = 加减乘除运算练习引导重载(执行);
-			善后工作(执行, 时间指针集);
+			if (!善后工作(执行, 时间指针集)) break;
 		}
 			return 执行->工作 = 继续;
 		case 10:
@@ -113,11 +114,11 @@ int 回调函数(指令类* 执行)
 
 int 选择命令(指令类* 执行)
 {
-	char input[256];
 	if ((执行->工作 == 开始) && (执行->菜单 == 开始菜单))
 	{
 		while (开始菜单)
 		{
+			char input[256];
 			if (fgets(input, sizeof(input), stdin) == NULL)
 			{
 				return -1; // 错误或EOF
@@ -170,6 +171,7 @@ int 选择命令(指令类* 执行)
 	{
 		while (继续菜单)
 		{
+			char input[256];
 			if (fgets(input, sizeof(input), stdin) == NULL) return -1;
 			input[strcspn(input, "\n")] = '\0';
 			if (strcmp(input, "q") == 0 || strcmp(input, "Q") == 0)
@@ -218,13 +220,12 @@ int 选择命令(指令类* 执行)
 	{
 		rt->工作 = 1;
 		rt->过程 = 0;
+		rt->功能 = 0;
 		rt->前项位 = 0;
 		rt->后项位 = 0;
 		rt->题目数 = 0;
 		rt->运算类型 = 0;
 		rt->正确题数 = 0;
-		/*rt->当前题目 = 0;
-		rt->错误题数 = 0;*/
 	}
 	return rt;
 }
@@ -443,6 +444,7 @@ void 鼓励与表扬(int 话)
 }
 练习用时 加减乘除运算练习引导加载器(指令类* 执行)
 {
+	if (执行->功能 != 完成) 执行->功能 = 运算数据无效;
 	练习用时 时间指针集 = { NULL };
 	时间指针集.作答开始时间 = (日历时间指针)malloc(sizeof(日历时间结构));
 	时间指针集.作答结束时间 = (日历时间指针)malloc(sizeof(日历时间结构));
@@ -461,21 +463,25 @@ void 鼓励与表扬(int 话)
 	case 加法:
 		if (!获取当前时间戳与日历时间(时间指针集.作答开始时间, 日历时间功能)) break;
 		加运算练习(执行);
+		执行->功能 = 运算数据有效;
 		if (!获取当前时间戳与日历时间(时间指针集.作答结束时间, 日历时间功能)) break;
 		return 时间指针集;
 	case 减法:
 		if (!获取当前时间戳与日历时间(时间指针集.作答开始时间, 日历时间功能)) break;
 		减运算练习(执行);
+		执行->功能 = 运算数据有效;
 		if (!获取当前时间戳与日历时间(时间指针集.作答结束时间, 日历时间功能)) break;
 		return 时间指针集;
 	case 乘法:
 		if (!获取当前时间戳与日历时间(时间指针集.作答开始时间, 日历时间功能)) break;
 		乘运算练习(执行);
+		执行->功能 = 运算数据有效;
 		if (!获取当前时间戳与日历时间(时间指针集.作答结束时间, 日历时间功能)) break;
 		return 时间指针集;
 	case 除法:
 		if (!获取当前时间戳与日历时间(时间指针集.作答开始时间, 日历时间功能)) break;
 		除运算练习(执行);
+		执行->功能 = 运算数据有效;
 		if (!获取当前时间戳与日历时间(时间指针集.作答结束时间, 日历时间功能)) break;
 		return 时间指针集;
 	}
@@ -486,6 +492,7 @@ void 鼓励与表扬(int 话)
 }
 练习用时 加减乘除运算练习引导重载(指令类* 执行)
 {
+	if (执行->功能 != 完成) 执行->功能 = 运算数据无效;
 	练习用时 时间指针集 = { NULL };
 	时间指针集.作答开始时间 = (日历时间指针)malloc(sizeof(日历时间结构));
 	时间指针集.作答结束时间 = (日历时间指针)malloc(sizeof(日历时间结构));
@@ -502,21 +509,25 @@ void 鼓励与表扬(int 话)
 	case 加法:
 		if (!获取当前时间戳与日历时间(时间指针集.作答开始时间, 日历时间功能)) break;
 		加运算练习(执行);
+		执行->功能 = 运算数据有效;
 		if (!获取当前时间戳与日历时间(时间指针集.作答结束时间, 日历时间功能)) break;
 		return 时间指针集;
 	case 减法:
 		if (!获取当前时间戳与日历时间(时间指针集.作答开始时间, 日历时间功能)) break;
 		减运算练习(执行);
+		执行->功能 = 运算数据有效;
 		if (!获取当前时间戳与日历时间(时间指针集.作答结束时间, 日历时间功能)) break;
 		return 时间指针集;
 	case 乘法:
 		if (!获取当前时间戳与日历时间(时间指针集.作答开始时间, 日历时间功能)) break;
 		乘运算练习(执行);
+		执行->功能 = 运算数据有效;
 		if (!获取当前时间戳与日历时间(时间指针集.作答结束时间, 日历时间功能)) break;
 		return 时间指针集;
 	case 除法:
 		if (!获取当前时间戳与日历时间(时间指针集.作答开始时间, 日历时间功能)) break;
 		除运算练习(执行);
+		执行->功能 = 运算数据有效;
 		if (!获取当前时间戳与日历时间(时间指针集.作答结束时间, 日历时间功能)) break;
 		return 时间指针集;
 	}
@@ -527,9 +538,9 @@ void 鼓励与表扬(int 话)
 }
 void 题目选择项(指令类* 执行)
 {
-	char input[256];
 	while (加减乘除菜单)
 	{
+		char input[256];
 		if (fgets(input, sizeof(input), stdin) == NULL) return;
 		input[strcspn(input, "\n")] = '\0';
 		if (strcmp(input, "q") == 0 || strcmp(input, "Q") == 0 || strcmp(input, "0") == 0)
@@ -661,19 +672,168 @@ void 除运算练习(指令类* 执行)
 	}
 	return;
 }
-void 运算练习总结(指令类* 执行, 日历时间指针 开始作答, 日历时间指针 结束作答)
+void 文件大小检查(const wchar_t* 文件路径和名称, const wchar_t* 后缀, const unsigned int 兆字节)
 {
-	// 设计中
+	if (文件路径和名称 == NULL && 后缀 == NULL) return;
+	wchar_t 原名[64] = { L"\0" };
+	swprintf(原名, sizeof(原名) / sizeof(wchar_t), L"%ls%ls", 文件路径和名称, 后缀);
+	struct _stat 文件状态;
+	if (_wstat(原名, &文件状态) == 0 && (unsigned int)文件状态.st_size > 兆字节 * 1024 * 1024)
+	{
+		wchar_t 重命名[96] = { L'\0' };
+		if (生成格式化的时间文件名(重命名, sizeof(重命名), 文件路径和名称, L"%Y%m%d%H%M%S", 后缀))
+			if (_wrename(原名, 重命名) != 0) wprintf(L"\a%ls文件重命名失败，下次将再次尝试\n", 原名);
+	}
 	return;
 }
-void 善后工作(指令类* 执行, 练习用时 时间指针集)
+bool 文件夹检查与创建(const wchar_t* 当前文件夹)
 {
-	if (时间指针集.作答开始时间 == NULL || 时间指针集.作答结束时间 == NULL)
+	if (当前文件夹 == NULL) return false;
+	unsigned char 计数器 = 0;
+	while (_waccess(当前文件夹, 0) != 0)
+	{
+		if (_wmkdir(当前文件夹) == 0) return true;
+		计数器++;
+		if (计数器 == 8)
+		{
+			wprintf(
+				L"\a无法创建%ls！\n"
+				L"!->错误原因：程序需要处于有权限得环境中#!!!\n",
+				当前文件夹);
+			return false;
+		}
+		Sleep(100);
+	}
+	return true;
+}
+bool 文件检查与创建打开(bool* 新创建标, FILE** 文件指针得指针, const wchar_t* 打开类型, const wchar_t* 文件路径和名称后缀)
+{
+	if (文件路径和名称后缀 == NULL) return false;
+	if (新创建标 != NULL) *新创建标 = false;
+	bool 文件存在性 = (_waccess(文件路径和名称后缀, 0) != 0);
+	if (新创建标 != NULL && 文件存在性) *新创建标 = true;
+	unsigned char 计数器 = 0;
+	do
+	{
+		if ((*文件指针得指针 = _wfopen(文件路径和名称后缀, 打开类型)) != NULL) return true;
+		if (计数器 == 8)
+		{
+			wprintf(
+				L"\a无法创建%ls！\n"
+				L"!->错误原因：程序需要处于有权限得环境中#!!!\n",
+				文件路径和名称后缀);
+			return false;
+		}
+		计数器++;
+		Sleep(100);
+	}
+	while (文件存在性);
+	return true;
+}
+void 成绩保存到文件(const wchar_t* 成绩文本, const wchar_t* 成绩表格)
+{
+	FILE* 文本文件指针 = NULL;
+	FILE* 表格文件指针 = NULL;
+	bool 表格文件 = false;
+	if (!文件夹检查与创建(L"成绩保存_A4")) return;
+	文件大小检查(L"成绩保存_A4/EXP", L".txt", 2);
+	if (!文件检查与创建打开(NULL, &文本文件指针, L"a, ccs=UTF-8", L"成绩保存_A4/EXP.txt")) return;
+	if (文本文件指针)
+	{
+		fwprintf(文本文件指针, L"%ls", 成绩文本);
+		fflush(文本文件指针);
+		fclose(文本文件指针);
+	}
+	else wprintf(L"\a成绩文本文件保存失败！\n");
+	if (!表格文件) 文件大小检查(L"成绩保存_A4/EXP", L".md", 2);
+	if (!文件检查与创建打开(&表格文件, &表格文件指针, L"a, ccs=UTF-8", L"成绩保存_A4/EXP.md")) return;
+	if (表格文件指针)
+	{
+		if (表格文件)
+		{
+			日历时间结构 当前时间 = { 0 };
+			wchar_t 表格文件创建时间[32] = { L'\0' };
+			获取当前时间戳与日历时间(&当前时间, 日历时间功能);
+			wcsftime(表格文件创建时间, sizeof(表格文件创建时间) / sizeof(wchar_t), 格式_详细时间, &当前时间);
+			fwprintf(表格文件指针, L"# 运算练习记录表\n");
+			fwprintf(表格文件指针, L"（创建时间 ：%ls）\t\t\t（时间数据出错将会用数字零表示）\n", 表格文件创建时间);
+			fwprintf(表格文件指针, L" | 练习日期 | 总作答题数 | 正确题数 | 题目正确率 | 错误题数 | 每题平均用时约 | 总用时 | \n | :-: | :-: | :-: | :-: | :-: | :-: | :-: | \n");
+		}
+		fwprintf(表格文件指针, L"%ls", 成绩表格);
+		fflush(表格文件指针);
+		fclose(表格文件指针);
+	}
+	else wprintf(L"\a成绩表格文件保存失败！\n");
+	return;
+}
+void 运算练习总结(指令类* 执行, 日历时间指针 开始作答, 日历时间指针 结束作答)
+{
+	wchar_t 成绩文本[128] = { L"\0" };
+	wchar_t 成绩表格[128] = { L"\0" };
+	wchar_t 练习总结[128] = { L"\0" };
+	wchar_t 练习激励语句[][8] = { L"完美！全对！\n",L"做得很好！\n",L"继续加油！\n" };
+	double 题目正确率 = (double)执行->正确题数 / 执行->题目数 * 100;
+	unsigned int 解错 = 执行->题目数 - 执行->正确题数;
+	unsigned char 选词器 = 2;
+	if (执行->正确题数 == 执行->题目数) 选词器 = 0;
+	else if (题目正确率 >= 0.8) 选词器 = 1;
+	else 选词器 = 2;
+	if (执行->功能 == 时间指针集可用)
+	{
+		wchar_t 日历时间[32] = {L"\0"};
+		double 用时秒数 = difftime(mktime(结束作答), mktime(开始作答));
+		double 解速 = 用时秒数 / 执行->题目数;
+		unsigned int 分钟 = (unsigned int)用时秒数 / 60;
+		unsigned int 秒钟 = (unsigned int)fmod(用时秒数, 60);
+		swprintf(练习总结, sizeof(练习总结) / sizeof(wchar_t),
+			L"总共作答题数：%u\n"
+			L"    正确题数：%u\n"
+			L"    题目正确率：%.1lf%%\n"
+			L"    错误题数：%u\n"
+			L"    用时： %u分%u秒\n"
+			L"    每题平均用时约：%.1lf秒\n",
+			执行->题目数, 执行->正确题数, 题目正确率, 解错, 分钟, 秒钟, 解速);
+		wcsftime(日历时间, sizeof(日历时间) / sizeof(wchar_t), 格式_详细时间, 开始作答);
+		swprintf(成绩文本, sizeof(成绩文本) / sizeof(wchar_t), L"%ls 总共作答题数：%u 正确题数：%u 题目正确率：%.1lf%% 错误题数：%u 用时: %u分%u秒 每题平均用时约：%.1lf秒\n",
+			日历时间, 执行->题目数, 执行->正确题数, 题目正确率, 解错, 分钟, 秒钟, 解速);
+		wcsftime(日历时间, sizeof(日历时间) / sizeof(wchar_t), L"%Y.%m.%d_%H.%M.%S", 开始作答);
+		swprintf(成绩表格, sizeof(成绩表格) / sizeof(wchar_t), L"| %ls | %u | %u | %.1lf%% | %u | %.1lf秒 | %u分%u秒 | \n",
+			日历时间, 执行->题目数, 执行->正确题数, 题目正确率, 解错, 解速, 分钟, 秒钟);
+	}
+	else
+	{
+		swprintf(练习总结, sizeof(练习总结) / sizeof(wchar_t),
+			L"总共作答题数：%u\n"
+			L"    正确题数：%u\n"
+			L"    题目正确率：%.1f%%\n"
+			L"    错误题数：%u\n"
+			L"    用时： 俄欧程序出错了\n",
+			执行->题目数, 执行->正确题数, 题目正确率, 解错);
+		swprintf(成绩文本, sizeof(成绩文本) / sizeof(wchar_t), L"时间都去哪儿了 总共作答题数：%u 正确题数：%u 题目正确率：%.1f%% 错误题数：%u 用时: 俄欧程序出错了 每题平均用时约：不知道\n",
+			执行->题目数, 执行->正确题数, 题目正确率, 解错);
+		swprintf(成绩表格, sizeof(成绩表格) / sizeof(wchar_t), L"| 0 | %u | %u | %.1lf%% | %u | 0 | 0 | \n",
+			执行->题目数, 执行->正确题数, 题目正确率, 解错);
+	}
+	wprintf(
+		L"\t*>练习总结<*\n"
+		L"****==================================****\n"
+		L"    你的本次练习情况：\n"
+		L"    %ls"
+		L"    %ls"
+		L"****==================================****\n",
+		练习总结, 练习激励语句[选词器]);
+	成绩保存到文件(成绩文本, 成绩表格);
+	return;
+}
+bool 善后工作(指令类* 执行, 练习用时 时间指针集)
+{
+	bool 运算数据 = 执行->功能;
+	if (运算数据 && (时间指针集.作答开始时间 == NULL || 时间指针集.作答结束时间 == NULL))
 	{
 		执行->功能 = 时间指针集失效;
 		运算练习总结(执行, NULL, NULL);
 	}
-	else
+	else if (运算数据 && (时间指针集.作答开始时间 != NULL && 时间指针集.作答结束时间 != NULL))
 	{
 		执行->功能 = 时间指针集可用;
 		运算练习总结(执行, 时间指针集.作答开始时间, 时间指针集.作答结束时间);
@@ -684,7 +844,7 @@ void 善后工作(指令类* 执行, 练习用时 时间指针集)
 	执行->正确题数 = 执行->运算类型 = 完成;
 	if (执行->工作 == 开始) 执行->功能 = 感谢使用;
 	else 执行->功能 = 完成;
-	return;
+	return 运算数据;
 }
 
 int 数(unsigned int 数位)
@@ -927,14 +1087,12 @@ void 生成本地题目文件整数(void)
 		{
 			for (k = 0; k < 8; k++)
 			{
-				fprintf(fp, "测试 %d\t\t", i + 1);
+				fwprintf(fp, L"测试 %d\t\t", i + 1);
 			}
 			fprintf(fp, "\n");
 		}
-		if (ferror(fp))
-			wprintf(L"写入文件时出错！\n");
-		else
-			wprintf(L"\a生成成功！\n");
+		if (ferror(fp)) wprintf(L"写入文件时出错！\n");
+		else wprintf(L"\a生成成功！\n");
 		fclose(fp);
 	}
 	else wprintf(L"\a生成失败！\n无法创建文件\n");
