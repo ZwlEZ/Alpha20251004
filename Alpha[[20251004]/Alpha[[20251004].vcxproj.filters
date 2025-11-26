@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="EXP.txt">
+    <Text Include="字符.txt">
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>

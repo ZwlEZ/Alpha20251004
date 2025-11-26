@@ -49,12 +49,18 @@ typedef struct LXSJ
 #define 加减乘除菜单 140
 
 // 数位
-#define 个位 1
-#define 十位 2
-#define 百位 3
-#define 千位 4
-#define 万位 5
-#define 除数 6
+#define 个位_正整数_ 1
+#define 十位_正整数_ 2
+#define 百位_正整数_ 3
+#define 千位_正整数_ 4
+#define 万位_正整数_ 5
+#define 除数_正整数_ 6
+#define 个位_负整数_ 7
+#define 十位_负整数_ 8
+#define 百位_负整数_ 9
+#define 千位_负整数_ 10
+#define 万位_负整数_ 11
+#define 除数_负整数_ 12
 
 // 
 #define 感谢使用 1

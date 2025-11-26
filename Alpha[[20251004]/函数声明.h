@@ -1,12 +1,13 @@
 #pragma once
+void 显示历史成绩(void);
 void 开始菜单打印(void);
+void 题目生成引导加载器(void);
 void 倒计时提醒(const wchar_t*, int);	// 思维放开一点点不仅仅用于退出
 void ClearScreen(void);
 void PrintMITLicense(void);
 void ClearInputBuffer(void);
 void ShowWelcomeMessage(void);
 void PrintMultiplicationTable(void);
-void 提示消息(指令类*);
 bool 善后工作(指令类*, 练习用时);
 void 加运算练习(指令类*);
 void 减运算练习(指令类*);
@@ -22,7 +23,6 @@ int 回调函数(指令类*);
 int 选择命令(指令类*);
 指令类* 初始化运行时(void);
 bool 获取当前时间戳与日历时间(void*, int);
-void 生成本地题目文件整数(void);
 bool 生成格式化的时间文件名(wchar_t*, size_t, const wchar_t* 首, const wchar_t*, const wchar_t*);
 
 #if defined(_WIN32) || defined(_WIN64)
